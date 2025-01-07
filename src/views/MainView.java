@@ -65,8 +65,8 @@ public class MainView extends JFrame {
 		JButton btnGestionDeClientes = new JButton("Gestión de clientes");
 		btnGestionDeClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ClientView clientView = new ClientView();
-				clientView.setVisible(true);
+				CustomerView customerView = new CustomerView();
+				customerView.setVisible(true);
 			}
 		});
 		btnGestionDeClientes.setForeground(new Color(255, 128, 128));
