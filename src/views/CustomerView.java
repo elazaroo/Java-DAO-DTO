@@ -18,6 +18,7 @@ public class CustomerView extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
+	public static String action = "";
 
 	/**
 	 * Launch the application.
@@ -53,22 +54,42 @@ public class CustomerView extends JDialog {
 			}
 		});
 		btnNew.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNew.setBounds(111, 150, 152, 29);
+		btnNew.setBounds(53, 150, 224, 29);
 		contentPanel.add(btnNew);
 		
 		JButton btnDelete = new JButton("Baja de clientes");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				action = "delete";
+				SelectCustomerList dialog = new SelectCustomerList();
+				dialog.setVisible(true);
+			}
+		});
 		btnDelete.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnDelete.setBounds(345, 150, 152, 29);
+		btnDelete.setBounds(345, 150, 196, 29);
 		contentPanel.add(btnDelete);
 		
 		JButton btnModify = new JButton("Modificación de clientes");
+		btnModify.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				action = "modify";
+				SelectCustomerList dialog = new SelectCustomerList();
+				dialog.setVisible(true);
+			}
+		});
 		btnModify.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnModify.setBounds(96, 233, 181, 29);
+		btnModify.setBounds(53, 233, 224, 29);
 		contentPanel.add(btnModify);
 		
 		JButton btnQueries = new JButton("Consultas de clientes");
+		btnQueries.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CustomerListForm dialog = new CustomerListForm();
+				dialog.setVisible(true);
+			}
+		});
 		btnQueries.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnQueries.setBounds(331, 233, 181, 29);
+		btnQueries.setBounds(345, 233, 196, 29);
 		contentPanel.add(btnQueries);
 		
 		JLabel lblMenuDeClientes = new JLabel("Menu de Clientes");

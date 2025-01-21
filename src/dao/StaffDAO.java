@@ -156,6 +156,7 @@ public class StaffDAO implements DAOPattern<StaffDTO>{
 				staffs.add(new StaffDTO(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4),rs.getBlob(5), rs.getString(6),
 						rs.getInt(7), rs.getInt(8), rs.getString(9), rs.getString(10), rs.getTimestamp(11)));
 			}
+			return staffs;
         } catch (Exception e) {
             e.printStackTrace();
         }

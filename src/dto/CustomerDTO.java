@@ -131,6 +131,5 @@ public class CustomerDTO {
 	public void setLast_update(Timestamp last_update) {
 		this.last_update = last_update;
 	}
-
 	
 }

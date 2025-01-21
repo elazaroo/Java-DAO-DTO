@@ -20,22 +20,24 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-public class NewCustomer extends JDialog {
+public class EditCustomer extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
-	private JTextField tfName;
-	private JTextField tfSurnames;
-	private JTextField tfEmail;
+	public static JTextField tfName;
+	public static JTextField tfSurnames;
+	public static JTextField tfEmail;
 	public static JTextField tfStore;
 	public static JTextField tfAddress;
+	public static JLabel customer_id;
+	
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			NewCustomer dialog = new NewCustomer();
+			EditCustomer dialog = new EditCustomer();
 			dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -46,7 +48,7 @@ public class NewCustomer extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public NewCustomer() {
+	public EditCustomer() {
 		setModal(true);
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 663, 360);
@@ -100,15 +102,18 @@ public class NewCustomer extends JDialog {
 		tfName.setBounds(22, 208, 96, 19);
 		contentPanel.add(tfName);
 		tfName.setColumns(10);
+		tfName.setText(SelectCustomerList.table.getValueAt(SelectCustomerList.table.getSelectedRow(), 2).toString());
 		
 		tfSurnames = new JTextField();
 		tfSurnames.setColumns(10);
 		tfSurnames.setBounds(155, 208, 96, 19);
+		tfSurnames.setText(SelectCustomerList.table.getValueAt(SelectCustomerList.table.getSelectedRow(), 3).toString());
 		contentPanel.add(tfSurnames);
 		{
 			tfEmail = new JTextField();
 			tfEmail.setColumns(10);
 			tfEmail.setBounds(275, 208, 146, 19);
+			tfEmail.setText(SelectCustomerList.table.getValueAt(SelectCustomerList.table.getSelectedRow(), 4).toString());
 			contentPanel.add(tfEmail);
 		}
 		{
@@ -136,7 +141,7 @@ public class NewCustomer extends JDialog {
 			contentPanel.add(btnSelectAddress);
 		}
 		{
-			JLabel lblNuevoCliente = new JLabel("Nuevo Cliente");
+			JLabel lblNuevoCliente = new JLabel("Editar Cliente");
 			lblNuevoCliente.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNuevoCliente.setFont(new Font("Javanese Text", Font.BOLD, 30));
 			lblNuevoCliente.setBounds(109, 22, 426, 47);
@@ -148,6 +153,7 @@ public class NewCustomer extends JDialog {
 			tfStore.setBounds(241, 121, 27, 19);
 			contentPanel.add(tfStore);
 			tfStore.setColumns(10);
+			tfStore.setText(SelectCustomerList.table.getValueAt(SelectCustomerList.table.getSelectedRow(), 1).toString());
 			tfStore.setVisible(false);
 		}
 		{
@@ -155,8 +161,15 @@ public class NewCustomer extends JDialog {
 			tfAddress.setEditable(false);
 			tfAddress.setColumns(10);
 			tfAddress.setBounds(528, 239, 27, 19);
+			tfAddress.setText(SelectCustomerList.table.getValueAt(SelectCustomerList.table.getSelectedRow(), 5).toString());
 			contentPanel.add(tfAddress);
 			tfAddress.setVisible(false);
+		}
+		{
+			customer_id = new JLabel(SelectCustomerList.table.getValueAt(SelectCustomerList.table.getSelectedRow(), 0).toString());
+			customer_id.setBounds(332, 124, 45, 13);
+			contentPanel.add(customer_id);
+			customer_id.setVisible(false);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -174,10 +187,11 @@ public class NewCustomer extends JDialog {
 						} else {
 							// Save customer
 							Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-							CustomerDTO customer = new CustomerDTO(Integer.valueOf(tfStore.getText()), tfName.getText(), tfSurnames.getText(), tfEmail.getText(), Integer.valueOf(tfAddress.getText()), 1, timestamp, timestamp);
+							CustomerDTO customer = new CustomerDTO(Integer.valueOf(customer_id.getText()), Integer.valueOf(tfStore.getText()), tfName.getText(), tfSurnames.getText(), tfEmail.getText(), Integer.valueOf(tfAddress.getText()), 1, timestamp, timestamp);
 							CustomerDAO dao = new CustomerDAO();
-							dao.insert(customer);
-							JOptionPane.showMessageDialog(null, "Cliente guardado correctamente","Información", JOptionPane.INFORMATION_MESSAGE);
+							dao.update(customer);
+							JOptionPane.showMessageDialog(null, "Cliente editado correctamente","Información", JOptionPane.INFORMATION_MESSAGE);
+							SelectCustomerList.loadCustomers();
 							dispose();
 						}
 					}
