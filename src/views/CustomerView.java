@@ -7,6 +7,13 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import connection.ConnectionX;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -54,7 +61,7 @@ public class CustomerView extends JDialog {
 			}
 		});
 		btnNew.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnNew.setBounds(53, 150, 224, 29);
+		btnNew.setBounds(53, 142, 224, 29);
 		contentPanel.add(btnNew);
 		
 		JButton btnDelete = new JButton("Baja de clientes");
@@ -66,7 +73,7 @@ public class CustomerView extends JDialog {
 			}
 		});
 		btnDelete.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnDelete.setBounds(345, 150, 196, 29);
+		btnDelete.setBounds(345, 142, 196, 29);
 		contentPanel.add(btnDelete);
 		
 		JButton btnModify = new JButton("Modificación de clientes");
@@ -78,7 +85,7 @@ public class CustomerView extends JDialog {
 			}
 		});
 		btnModify.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnModify.setBounds(53, 233, 224, 29);
+		btnModify.setBounds(53, 219, 224, 29);
 		contentPanel.add(btnModify);
 		
 		JButton btnQueries = new JButton("Consultas de clientes");
@@ -89,7 +96,7 @@ public class CustomerView extends JDialog {
 			}
 		});
 		btnQueries.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btnQueries.setBounds(345, 233, 196, 29);
+		btnQueries.setBounds(345, 219, 196, 29);
 		contentPanel.add(btnQueries);
 		
 		JLabel lblMenuDeClientes = new JLabel("Menu de Clientes");
@@ -97,6 +104,44 @@ public class CustomerView extends JDialog {
 		lblMenuDeClientes.setFont(new Font("Javanese Text", Font.BOLD, 30));
 		lblMenuDeClientes.setBounds(86, 10, 426, 47);
 		contentPanel.add(lblMenuDeClientes);
+		
+		JButton btnReport = new JButton("Informe de clientes");
+		btnReport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 JasperPrint jasperPrintWindow = null;
+				 try {
+					 jasperPrintWindow = JasperFillManager.fillReport(
+					 "src\\reports\\UserGeneral.jasper",
+					null,ConnectionX.getInstance().getConnection());
+				 } catch (JRException ex) {
+					 ex.printStackTrace();
+				 }
+				 JasperViewer jasperViewer = new JasperViewer(jasperPrintWindow,false);
+				 jasperViewer.setVisible(true);
+			}
+		});
+		btnReport.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnReport.setBounds(53, 299, 224, 29);
+		contentPanel.add(btnReport);
+		
+		JButton btnReport2 = new JButton("Informe por staff");
+		btnReport2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JasperPrint jasperPrintWindow = null;
+				 try {
+					 jasperPrintWindow = JasperFillManager.fillReport(
+					 "src\\reports\\UserByStaff.jasper",
+					null,ConnectionX.getInstance().getConnection());
+				 } catch (JRException ex) {
+					 ex.printStackTrace();
+				 }
+				 JasperViewer jasperViewer = new JasperViewer(jasperPrintWindow,false);
+				 jasperViewer.setVisible(true); 
+			}
+		});
+		btnReport2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnReport2.setBounds(345, 299, 196, 29);
+		contentPanel.add(btnReport2);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
